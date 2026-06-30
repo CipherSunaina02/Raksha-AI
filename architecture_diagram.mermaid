@@ -1,0 +1,22 @@
+flowchart TD
+    A[Call Metadata<br/>Transcript, Caller ID, Duration] --> C[Preprocessing<br/>Speech-to-text, Flag extraction]
+    B[Transaction Logs<br/>Amount, Account, Destination] --> C
+
+    C --> D[Scam Classifier<br/>Diya's AI Model]
+    C --> E[Fraud Network Graph<br/>Diya's Graph Algorithm]
+
+    D --> F[Risk Scoring Engine<br/>scam_probability + key_triggers]
+    E --> F
+
+    F --> G[Evidence Package Generator<br/>Audit-ready logs]
+    F --> H[Citizen Fraud Shield UI<br/>Sunaina's Frontend]
+
+    H --> I[Live Verdict to User<br/>Scam Alert + Lead Time]
+    G --> J[Law Enforcement Export<br/>Legally admissible report]
+
+    style A fill:#1A1A2E,color:#fff
+    style B fill:#1A1A2E,color:#fff
+    style D fill:#0F3460,color:#fff
+    style E fill:#0F3460,color:#fff
+    style H fill:#16213E,color:#fff
+    style F fill:#533483,color:#fff
