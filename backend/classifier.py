@@ -15,7 +15,7 @@ def extract_flags(transcript):
     text = transcript.lower()
 
     return {
-        "urgency_flag": any(word in text for word in ["immediately", "urgent", "within 1 hour"]),
+        "urgency_flag": any(word in text for word in ["immediately", "urgent", "now"]),
         "isolation_flag": any(word in text for word in ["do not disconnect", "stay on call", "do not inform"]),
     }
 
@@ -26,11 +26,11 @@ def extract_flags(transcript):
 def compute_scam_score(call):
     score = 0
 
-    # Identity check
+    # Identity
     if call["caller_claimed_identity"] in ["CBI", "ED", "Mumbai Police", "Customs", "RBI"]:
         score += 0.2
 
-    # Accusation check
+    # Accusation
     if call["accusation_type"] in [
         "money_laundering",
         "drug_trafficking",
@@ -39,7 +39,7 @@ def compute_scam_score(call):
     ]:
         score += 0.2
 
-    # Behavioral flags
+    # Flags
     if call.get("video_call_flag"):
         score += 0.15
 
@@ -56,27 +56,33 @@ def compute_scam_score(call):
     if "escrow" in call["payment_destination_claim"].lower():
         score += 0.05
 
+    # 🔥 Duration signal
+    duration = call.get("call_duration_sec", 0)
+
+    if duration > 7200:
+        score += 0.1
+    elif duration > 1800:
+        score += 0.05
+
     return round(min(score, 1.0), 2)
 
 
 # -----------------------------
-# Main Prediction Function
+# Main Analyzer
 # -----------------------------
 def analyze_calls():
     data = load_data()
     results = []
 
     for call in data:
-        # Extract flags from transcript
+        # Extract additional flags
         extracted_flags = extract_flags(call["transcript_text"])
-
-        # Merge extracted flags into call
         call.update(extracted_flags)
 
-        # Compute score
+        # Score
         scam_prob = compute_scam_score(call)
 
-        # Collect triggered flags
+        # Collect triggers
         triggers = [k for k, v in call.items() if k.endswith("_flag") and v]
 
         results.append({
@@ -89,7 +95,7 @@ def analyze_calls():
 
 
 # -----------------------------
-# Run Test
+# Run
 # -----------------------------
 if __name__ == "__main__":
     output = analyze_calls()
