@@ -1,0 +1,57 @@
+[
+  {
+    "call_id": "c_1001",
+    "caller_claimed_identity": "CBI",
+    "accusation_type": "drug_trafficking",
+    "payment_destination_claim": "RBI escrow account",
+    "transcript_text": "This is CBI Mumbai. A parcel under your name contains drugs. Do not disconnect. Transfer funds to RBI escrow account immediately.",
+    "video_call_flag": true,
+    "fake_document_shown": true,
+    "isolation_flag": true,
+    "urgency_flag": true
+  },
+  {
+    "call_id": "c_1002",
+    "caller_claimed_identity": "ED",
+    "accusation_type": "money_laundering",
+    "payment_destination_claim": "verification account",
+    "transcript_text": "This is ED. Your accounts are linked to money laundering. Stay on call and transfer funds to verification account.",
+    "video_call_flag": true,
+    "fake_document_shown": true,
+    "isolation_flag": true,
+    "urgency_flag": true
+  },
+  {
+    "call_id": "c_1003",
+    "caller_claimed_identity": "Mumbai Police",
+    "accusation_type": "aadhaar_misuse",
+    "payment_destination_claim": "police clearance account",
+    "transcript_text": "Mumbai Police here. Aadhaar misuse detected. Do not disconnect. Transfer money for clearance.",
+    "video_call_flag": false,
+    "fake_document_shown": false,
+    "isolation_flag": true,
+    "urgency_flag": true
+  },
+  {
+    "call_id": "c_1004",
+    "caller_claimed_identity": "Customs",
+    "accusation_type": "parcel_with_contraband",
+    "payment_destination_claim": "customs holding account",
+    "transcript_text": "Customs department. Parcel seized with illegal items. Pay clearance fees immediately.",
+    "video_call_flag": true,
+    "fake_document_shown": true,
+    "isolation_flag": true,
+    "urgency_flag": true
+  },
+  {
+    "call_id": "c_1005",
+    "caller_claimed_identity": "RBI",
+    "accusation_type": "money_laundering",
+    "payment_destination_claim": "RBI secure account",
+    "transcript_text": "RBI here. Your account flagged. Transfer funds to secure account to avoid freeze.",
+    "video_call_flag": false,
+    "fake_document_shown": true,
+    "isolation_flag": false,
+    "urgency_flag": true
+  }
+]
