@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import './App.css';
+import rakshaLogo from './assets/raksha-logo.jpg';
 
 // 10-15 Fake Scam Call Transcript templates containing schema fields:
 // caller_claimed_identity, accusation_type, payment_destination_claim, and triggers
@@ -729,9 +730,11 @@ function App() {
       {/* Navigation Header */}
       <header className="app-header">
         <div className="logo-section">
-          <svg className="logo-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-          </svg>
+          <img
+            src={rakshaLogo}
+            alt="Raksha AI - Citizen Fraud Shield"
+            className="raksha-logo-img"
+          />
           <h1>CITIZEN FRAUD SHIELD</h1>
           <div className="shield-badge">
             <div className="shield-pulse-dot"></div>
