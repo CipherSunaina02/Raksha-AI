@@ -118,4 +118,8 @@ def analyze():
 # 🔥 UPDATED RUN (API MODE)
 # -----------------------------
 if __name__ == "__main__":
+<<<<<<< HEAD
     app.run(debug=True, port=5000)
+=======
+    app.run(debug=True, port=5000)
+>>>>>>> 20a6183c6f10df2a906c56e71640729f3c2d0e18

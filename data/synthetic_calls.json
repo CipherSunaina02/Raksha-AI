@@ -4,109 +4,59 @@
     "caller_claimed_identity": "CBI",
     "accusation_type": "drug_trafficking",
     "payment_destination_claim": "RBI escrow account",
-    "transcript_text": "This is CBI Mumbai. A parcel under your name contains drugs and fake passports. Do not disconnect this call. Transfer funds immediately to RBI escrow account for verification.",
+    "transcript_text": "This is CBI Mumbai. A parcel under your name contains drugs. Do not disconnect. Transfer funds immediately to RBI escrow account.",
     "video_call_flag": true,
     "fake_document_shown": true,
     "isolation_flag": true,
-    "urgency_flag": true
+    "urgency_flag": true,
+    "call_duration_sec": 10800
   },
   {
     "call_id": "c_1002",
     "caller_claimed_identity": "ED",
     "accusation_type": "money_laundering",
     "payment_destination_claim": "verification account",
-    "transcript_text": "This is Enforcement Directorate. Your accounts are linked to money laundering. Do not inform anyone. Stay on call and transfer funds to the verification account immediately.",
+    "transcript_text": "This is ED. Your accounts are linked to money laundering. Stay on call and transfer funds immediately.",
     "video_call_flag": true,
     "fake_document_shown": true,
     "isolation_flag": true,
-    "urgency_flag": true
+    "urgency_flag": true,
+    "call_duration_sec": 7200
   },
   {
     "call_id": "c_1003",
     "caller_claimed_identity": "Mumbai Police",
     "accusation_type": "aadhaar_misuse",
     "payment_destination_claim": "police clearance account",
-    "transcript_text": "Mumbai Police cyber cell here. Your Aadhaar is used in illegal activities. Do not disconnect. Transfer money immediately for clearance.",
+    "transcript_text": "Mumbai Police here. Aadhaar misuse detected. Do not disconnect. Transfer money now.",
     "video_call_flag": false,
     "fake_document_shown": false,
     "isolation_flag": true,
-    "urgency_flag": true
+    "urgency_flag": true,
+    "call_duration_sec": 1800
   },
   {
     "call_id": "c_1004",
     "caller_claimed_identity": "Customs",
     "accusation_type": "parcel_with_contraband",
     "payment_destination_claim": "customs holding account",
-    "transcript_text": "Customs department speaking. A parcel under your name contains illegal items. Pay clearance charges immediately and do not speak to anyone.",
+    "transcript_text": "Customs department. Parcel seized with illegal items. Pay immediately.",
     "video_call_flag": true,
     "fake_document_shown": true,
     "isolation_flag": true,
-    "urgency_flag": true
+    "urgency_flag": true,
+    "call_duration_sec": 5400
   },
   {
     "call_id": "c_1005",
     "caller_claimed_identity": "RBI",
     "accusation_type": "money_laundering",
     "payment_destination_claim": "RBI secure account",
-    "transcript_text": "Reserve Bank of India speaking. Your account is flagged for suspicious transactions. Transfer funds immediately to RBI secure account to avoid freezing.",
+    "transcript_text": "RBI here. Your account flagged. Transfer funds to secure account.",
     "video_call_flag": false,
     "fake_document_shown": true,
     "isolation_flag": false,
-    "urgency_flag": true
-  },
-  {
-    "call_id": "c_1006",
-    "caller_claimed_identity": "CBI",
-    "accusation_type": "parcel_with_contraband",
-    "payment_destination_claim": "government verification account",
-    "transcript_text": "CBI officer here. A suspicious parcel has your identity. Stay on video call. Transfer money immediately to government verification account.",
-    "video_call_flag": true,
-    "fake_document_shown": true,
-    "isolation_flag": true,
-    "urgency_flag": true
-  },
-  {
-    "call_id": "c_1007",
-    "caller_claimed_identity": "ED",
-    "accusation_type": "drug_trafficking",
-    "payment_destination_claim": "secure holding account",
-    "transcript_text": "Your name is linked to drug trafficking. Enforcement Directorate investigation is active. Do not disconnect. Transfer funds immediately to secure holding account.",
-    "video_call_flag": true,
-    "fake_document_shown": false,
-    "isolation_flag": true,
-    "urgency_flag": true
-  },
-  {
-    "call_id": "c_1008",
-    "caller_claimed_identity": "TRAI",
-    "accusation_type": "aadhaar_misuse",
-    "payment_destination_claim": "telecom verification account",
-    "transcript_text": "TRAI calling. Your number is linked to illegal SIM usage. Immediate verification required. Stay on call and transfer money.",
-    "video_call_flag": false,
-    "fake_document_shown": false,
-    "isolation_flag": true,
-    "urgency_flag": true
-  },
-  {
-    "call_id": "c_1009",
-    "caller_claimed_identity": "Mumbai Police",
-    "accusation_type": "money_laundering",
-    "payment_destination_claim": "police escrow account",
-    "transcript_text": "Cyber crime branch Mumbai Police. Your account is used for laundering money. Do not inform family. Immediate transfer required.",
-    "video_call_flag": true,
-    "fake_document_shown": true,
-    "isolation_flag": true,
-    "urgency_flag": true
-  },
-  {
-    "call_id": "c_1010",
-    "caller_claimed_identity": "Customs",
-    "accusation_type": "drug_trafficking",
-    "payment_destination_claim": "customs escrow account",
-    "transcript_text": "Customs authority speaking. Drugs found in shipment under your name. This is serious. Immediate payment required.",
-    "video_call_flag": true,
-    "fake_document_shown": true,
-    "isolation_flag": false,
-    "urgency_flag": true
+    "urgency_flag": true,
+    "call_duration_sec": 900
   }
 ]
