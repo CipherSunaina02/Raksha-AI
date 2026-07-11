@@ -33,3 +33,7 @@ definitions covering call metadata, transaction logs, and prediction output.
 - Precision & Recall on scam detection
 - Lead time (detection before financial transfer)
 - Auditability of evidence packages
+
+## Submission Resources
+- Presentation Deck: https://docs.google.com/presentation/d/1U8p_e3wZG1W03JoudIE8kQvURsRfTJlS/view
+- 🎥 Demo Video: Coming soon
