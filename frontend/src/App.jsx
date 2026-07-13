@@ -183,7 +183,7 @@ function App() {
   const [isSimulating, setIsSimulating] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
-  
+
   // Phase 3 states
   const [customInput, setCustomInput] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("en");
@@ -197,7 +197,7 @@ function App() {
     incidentDescription: "",
     includeLogs: true
   });
-  
+
   // Real-time schema state variables
   const [callerClaimedIdentity, setCallerClaimedIdentity] = useState("Not Detected");
   const [accusationType, setAccusationType] = useState("Not Detected");
@@ -208,7 +208,7 @@ function App() {
     isolation_flag: false,
     urgency_flag: false,
   });
-  
+
   const [scamProbability, setScamProbability] = useState(0.05);
   const [leadTimeSec, setLeadTimeSec] = useState(0);
 
@@ -377,7 +377,7 @@ function App() {
 
     const nextLineObj = template.dialogue[currentLine];
     const timestamp = new Date().toISOString();
-    
+
     // Add to chat history
     setChatHistory(prev => [...prev, {
       sender: nextLineObj.sender,
@@ -395,7 +395,7 @@ function App() {
       resetSimulation();
     }
     setIsSimulating(true);
-    
+
     // Process first step immediately
     stepForward();
 
@@ -413,21 +413,60 @@ function App() {
   };
 
   // Submission handler for custom text input (Red-Team testing)
-  const handleCustomSubmit = (e) => {
+  const handleCustomSubmit = async (e) => {
     e.preventDefault();
     if (!customInput.trim()) return;
 
     const timestamp = new Date().toISOString();
-    setChatHistory(prev => [...prev, {
-      sender: 'caller',
-      text: customInput,
-      timestamp
-    }]);
 
-    // Run custom sentence through NLP classifier
-    runLiveClassifier(customInput, flags, callerClaimedIdentity, accusationType, paymentDestinationClaim);
+    // Show the message in chat
+    setChatHistory((prev) => [
+      ...prev,
+      {
+        sender: "caller",
+        text: customInput,
+        timestamp,
+      },
+    ]);
+
+    // Run local classifier
+    runLiveClassifier(
+      customInput,
+      flags,
+      callerClaimedIdentity,
+      accusationType,
+      paymentDestinationClaim
+    );
+
+    // Send data to your Render backend
+    try {
+      const callData = {
+        transcript: customInput,
+      };
+
+      const res = await fetch("https://raksha-ai-v7j9.onrender.com/analyze", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(callData),
+      });
+
+      const result = await res.json();
+      console.log("Backend Response:", result);
+
+      // (Optional) If your backend returns scam probability
+      if (result.scam_probability) {
+        setScamProbability(result.scam_probability);
+      }
+
+      triggerToast("Analysis completed successfully.");
+    } catch (error) {
+      console.error("Backend Error:", error);
+      triggerToast("Unable to connect to backend.");
+    }
+
     setCustomInput("");
-    triggerToast("Custom caller line classified dynamically.");
   };
 
   // NCRB Guided Wizard Controls
@@ -532,7 +571,7 @@ function App() {
           fontSize: '13px',
           animation: 'slide-in 0.3s ease-out'
         }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{color: 'var(--accent-blue)'}}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--accent-blue)' }}>
             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
             <polyline points="22 4 12 14.01 9 11.01"></polyline>
           </svg>
@@ -582,11 +621,11 @@ function App() {
                   <div className="form-row">
                     <div className="form-group">
                       <span className="form-label">Caller Phone (Origin)</span>
-                      <input 
-                        type="text" 
-                        className="form-input" 
+                      <input
+                        type="text"
+                        className="form-input"
                         value={reportDetails.callerNumber}
-                        onChange={(e) => setReportDetails({...reportDetails, callerNumber: e.target.value})}
+                        onChange={(e) => setReportDetails({ ...reportDetails, callerNumber: e.target.value })}
                       />
                     </div>
                     <div className="form-group">
@@ -597,29 +636,29 @@ function App() {
                   <div className="form-row">
                     <div className="form-group">
                       <span className="form-label">Claimed Impersonation</span>
-                      <input 
-                        type="text" 
-                        className="form-input" 
+                      <input
+                        type="text"
+                        className="form-input"
                         value={reportDetails.impersonatedIdentity}
-                        onChange={(e) => setReportDetails({...reportDetails, impersonatedIdentity: e.target.value})}
+                        onChange={(e) => setReportDetails({ ...reportDetails, impersonatedIdentity: e.target.value })}
                       />
                     </div>
                     <div className="form-group">
                       <span className="form-label">Crime Accusation Claim</span>
-                      <input 
-                        type="text" 
-                        className="form-input" 
+                      <input
+                        type="text"
+                        className="form-input"
                         value={reportDetails.accusationType.replace(/_/g, ' ')}
-                        onChange={(e) => setReportDetails({...reportDetails, accusationType: e.target.value})}
+                        onChange={(e) => setReportDetails({ ...reportDetails, accusationType: e.target.value })}
                       />
                     </div>
                   </div>
                   <div className="form-group">
                     <span className="form-label">Incident Description Summary</span>
-                    <textarea 
-                      className="form-textarea" 
+                    <textarea
+                      className="form-textarea"
                       value={reportDetails.incidentDescription}
-                      onChange={(e) => setReportDetails({...reportDetails, incidentDescription: e.target.value})}
+                      onChange={(e) => setReportDetails({ ...reportDetails, incidentDescription: e.target.value })}
                     />
                   </div>
                 </div>
@@ -653,18 +692,18 @@ function App() {
                       ))}
                     </div>
                   </div>
-                  
+
                   <div className="form-group" style={{ marginTop: '20px' }}>
                     <label className="checkbox-label">
-                      <input 
-                        type="checkbox" 
+                      <input
+                        type="checkbox"
                         checked={reportDetails.includeLogs}
-                        onChange={(e) => setReportDetails({...reportDetails, includeLogs: e.target.checked})}
+                        onChange={(e) => setReportDetails({ ...reportDetails, includeLogs: e.target.checked })}
                       />
                       <span>Attach cryptographic evidence package JSON (Includes schema keys, probability metrics, and trigger logs for auditability)</span>
                     </label>
                   </div>
-                  
+
                   {isSubmittingReport && (
                     <div>
                       <div className="spinner"></div>
@@ -686,8 +725,8 @@ function App() {
                     <h4>Complaint Filed Successfully</h4>
                     <span className="receipt-number">NCRB-ACK-{activeTemplate.id.toUpperCase()}-2026</span>
                     <div className="receipt-details">
-                      Your cyber incident report has been submitted to the National Cyber Crime Portal. 
-                      Impersonator number <strong>{activeTemplate.caller_number}</strong> and the associated evidence package 
+                      Your cyber incident report has been submitted to the National Cyber Crime Portal.
+                      Impersonator number <strong>{activeTemplate.caller_number}</strong> and the associated evidence package
                       have been registered for immediate block action under the telecom registry.
                     </div>
                   </div>
@@ -698,15 +737,15 @@ function App() {
             <div className="modal-footer">
               {modalStep < 3 ? (
                 <>
-                  <button 
-                    className="btn-secondary" 
-                    onClick={handleModalPrev} 
+                  <button
+                    className="btn-secondary"
+                    onClick={handleModalPrev}
                     disabled={modalStep === 1 || isSubmittingReport}
                   >
                     Back
                   </button>
-                  <button 
-                    className="btn-primary" 
+                  <button
+                    className="btn-primary"
                     onClick={handleModalNext}
                     disabled={isSubmittingReport}
                   >
@@ -714,8 +753,8 @@ function App() {
                   </button>
                 </>
               ) : (
-                <button 
-                  className="btn-primary" 
+                <button
+                  className="btn-primary"
                   style={{ marginLeft: 'auto' }}
                   onClick={() => setIsReportModalOpen(false)}
                 >
@@ -741,11 +780,11 @@ function App() {
             <span>{LOCALIZED_CONTENT[selectedLanguage].activeLabel}</span>
           </div>
         </div>
-        
+
         <div className="header-right">
           {/* Language Selector */}
-          <select 
-            className="lang-select" 
+          <select
+            className="lang-select"
             value={selectedLanguage}
             onChange={(e) => setSelectedLanguage(e.target.value)}
           >
@@ -786,9 +825,9 @@ function App() {
               <h2>Speech-to-Text Simulator</h2>
             </div>
             <div className="transcript-actions">
-              <select 
-                className="template-selector" 
-                value={selectedTemplateIndex} 
+              <select
+                className="template-selector"
+                value={selectedTemplateIndex}
                 onChange={handleTemplateChange}
                 disabled={isSimulating}
               >
@@ -807,7 +846,7 @@ function App() {
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                 </svg>
-                <p>Awaiting live telecom stream connection...<br/>Select a template above and click "Auto-Simulate" or "Step Line".</p>
+                <p>Awaiting live telecom stream connection...<br />Select a template above and click "Auto-Simulate" or "Step Line".</p>
               </div>
             ) : (
               chatHistory.map((chat, idx) => (
@@ -827,9 +866,9 @@ function App() {
           <footer className="transcript-footer">
             {/* Custom Input Form (Phase 3 Red-Team testing input) */}
             <form onSubmit={handleCustomSubmit} className="custom-chat-form">
-              <input 
-                type="text" 
-                className="custom-chat-input" 
+              <input
+                type="text"
+                className="custom-chat-input"
                 placeholder="Type a custom caller line (e.g. 'This is CBI police, you are under digital arrest. Keep it secret.') to test classifier..."
                 value={customInput}
                 onChange={(e) => setCustomInput(e.target.value)}
@@ -843,15 +882,15 @@ function App() {
                 <span>{isSimulating ? "FEED STATUS: SIMULATING STREAM" : "FEED STATUS: STANDBY"}</span>
               </div>
               <div style={{ display: 'flex', gap: '10px' }}>
-                <button 
-                  className="btn-secondary" 
+                <button
+                  className="btn-secondary"
                   onClick={() => stepForward()}
                   disabled={isSimulating || currentLine >= activeTemplate.dialogue.length}
                 >
                   Step Line
                 </button>
-                <button 
-                  className="btn-primary" 
+                <button
+                  className="btn-primary"
                   onClick={isSimulating ? stopSimulation : startAutoSimulation}
                 >
                   {isSimulating ? (
@@ -950,11 +989,11 @@ function App() {
               <div className="risk-meter-gauge">
                 <svg width="120" height="120">
                   <circle className="circular-bg" cx="60" cy="60" r={radius} />
-                  <circle 
-                    className="circular-progress" 
-                    cx="60" 
-                    cy="60" 
-                    r={radius} 
+                  <circle
+                    className="circular-progress"
+                    cx="60"
+                    cy="60"
+                    r={radius}
                     stroke={riskStatus.color}
                     style={{ strokeDashoffset }}
                   />
@@ -1073,8 +1112,8 @@ function App() {
             <div className="evidence-package-section">
               <div className="evidence-header-row">
                 <span className="section-label">Audit Evidence Package (evidence_package)</span>
-                <button 
-                  className="btn-primary" 
+                <button
+                  className="btn-primary"
                   style={{ padding: '6px 12px', fontSize: '12px' }}
                   onClick={openReportWizard}
                   disabled={scamProbability < 0.7}
