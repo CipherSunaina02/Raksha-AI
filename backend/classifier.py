@@ -119,6 +119,9 @@ def analyze():
 # -----------------------------
 import os
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
+if __name__ == '__main__':
+    # Render provides a PORT environment variable. If it's not there, default to 5000 locally.
+    port = int(os.environ.get("PORT", 5000))
+    
+    # Crucial: Change host to '0.0.0.0'
+    app.run(host='0.0.0.0', port=port)
